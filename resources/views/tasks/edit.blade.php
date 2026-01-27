@@ -20,6 +20,7 @@
                                 class="w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm text-gray-900"
                                 id="title" type="text" name="title" value="{{ old('title', $task->title) }}"
                                 required>
+                            @error('title') <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p> @enderror
                         </div>
 
                         <div class="mb-5">
@@ -27,6 +28,7 @@
                             <textarea
                                 class="w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm text-gray-900"
                                 id="description" name="description" rows="3">{{ old('description', $task->description) }}</textarea>
+                            @error('description') <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p> @enderror
                         </div>
 
                         <div class="mb-6">
