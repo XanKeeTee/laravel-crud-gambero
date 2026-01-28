@@ -59,7 +59,7 @@ Sigue estos pasos para desplegar el proyecto en tu máquina local:
 
 ### 1. Clonar el Repositorio
 ```bash
-git clone [https://github.com/tu-usuario/laravel-crud-gambero.git](https://github.com/tu-usuario/laravel-crud-gambero.git)
+git clone https://github.com/tu-usuario/laravel-crud-gambero.git
 cd laravel-crud-gambero
 ```
 
