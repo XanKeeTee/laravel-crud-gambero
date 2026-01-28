@@ -73,9 +73,9 @@ npm install
 ```
 ### 4. Configurar el Entorno
 Duplica el archivo de ejemplo para crear tu configuración local:
-
-cp .env.example .env
-
+```bash
+cp .env.example .env                         
+```
 Abre el archivo .env y configura las credenciales de tu base de datos:
 
 DB_CONNECTION=mysql<br>
@@ -89,3 +89,23 @@ DB_PASSWORD=tu_contraseña<br>
 ```bash
 php artisan key:generate                           
 ```
+
+### 6. Migrar la Base de Datos
+Esto creará las tablas necesarias (Users, Tasks, etc.) y añadirá la columna de roles.
+```bash
+php artisan migrate                     
+```
+
+### 7. Compilar Assets y Ejecutar
+Necesitarás dos terminales abiertas:
+## Terminal 1 (Compilación de estilos en tiempo real):
+```bash
+npm run dev                      
+```
+## Terminal 2 (Ejecución del servidor):
+
+```bash
+php artisan serve
+```
+
+¡Listo! Accede a http://localhost:8000 en tu navegador.
