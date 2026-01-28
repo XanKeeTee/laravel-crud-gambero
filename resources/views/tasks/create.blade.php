@@ -19,6 +19,7 @@
                             <input
                                 class="w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm text-gray-900"
                                 id="title" type="text" name="title" placeholder="Ej: Comprar Patatas" required>
+                            @error('title') <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p> @enderror
                         </div>
 
                         <div class="mb-6">
@@ -26,6 +27,7 @@
                             <textarea
                                 class="w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm text-gray-900"
                                 id="description" name="description" rows="3" placeholder="¿Qué hay que hacer?"></textarea>
+                            @error('description') <p class="text-red-500 text-xs italic mt-1">{{ $message }}</p> @enderror
                         </div>
 
                         <div class="flex items-center justify-between pt-4 border-t border-gray-100">

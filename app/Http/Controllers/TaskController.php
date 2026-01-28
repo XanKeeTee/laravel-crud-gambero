@@ -34,11 +34,19 @@ class TaskController extends Controller
 
     public function edit(Task $task)
     {
+        if (auth()->user()->role !== 'admin') {
+            return redirect()->route('tasks.index')->with('error', 'No tienes permiso para editar tareas.');
+        }
         return view('tasks.edit', compact('task'));
     }
 
     public function update(Request $request, Task $task)
     {
+
+        if (auth()->user()->role !== 'admin') {
+            abort(403, 'Acción no autorizada.');
+        }
+
         $validated = $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
@@ -52,6 +60,9 @@ class TaskController extends Controller
     }
     public function destroy(Task $task)
     {
+        if (auth()->user()->role !== 'admin') {
+            return redirect()->route('tasks.index')->with('error', 'No tienes permiso para eliminar tareas.');
+        }
         $task->delete();
 
         return redirect()->route('tasks.index')
