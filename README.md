@@ -1,10 +1,10 @@
 # 🦐 Laravel CRUD Gambero - Gestor de Tareas
 
-![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel)
+![Laravel](https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css)
 ![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=for-the-badge&logo=php)
 
-Una aplicación web robusta para la gestión de tareas desarrollada con **Laravel 11**. Este proyecto implementa un sistema completo de autenticación con **roles diferenciados (Administrador y Usuario)**, permitiendo un control granular sobre quién puede crear, ver y eliminar tareas.
+Una aplicación web robusta para la gestión de tareas desarrollada con **Laravel 12**. Este proyecto implementa un sistema completo de autenticación con **roles diferenciados (Administrador y Usuario)**, permitiendo un control granular sobre quién puede crear, ver y eliminar tareas.
 
 ---
 
