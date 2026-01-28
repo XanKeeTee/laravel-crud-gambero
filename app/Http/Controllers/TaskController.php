@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::latest()->get();
+        if (Auth::user()->role === 'admin') {
+            $tasks = Task::all();
+        } else {
+            $tasks = Task::where('user_id', Auth::id())->get();
+        }
+        
         return view('tasks.index', compact('tasks'));
     }
 
@@ -23,10 +29,14 @@ class TaskController extends Controller
         $validated = $request->validate([
             'title' => 'required|max:255',
             'description' => 'required',
-            'status' => 'required', // Validamos que el estado venga del form
+            'status' => 'required', 
         ]);
 
-        Task::create($validated); // Solo guarda lo validado
+        Task::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => Auth::id(),
+        ]);
 
         return redirect()->route('tasks.index')
             ->with('success', 'Tarea creada correctamente.');
@@ -34,7 +44,7 @@ class TaskController extends Controller
 
     public function edit(Task $task)
     {
-        if (auth()->user()->role !== 'admin') {
+        if (Auth::user()->role !== 'admin') {
             return redirect()->route('tasks.index')->with('error', 'No tienes permiso para editar tareas.');
         }
         return view('tasks.edit', compact('task'));
@@ -43,7 +53,7 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
 
-        if (auth()->user()->role !== 'admin') {
+        if (Auth::user()->role !== 'admin') {
             abort(403, 'Acción no autorizada.');
         }
 
@@ -60,7 +70,7 @@ class TaskController extends Controller
     }
     public function destroy(Task $task)
     {
-        if (auth()->user()->role !== 'admin') {
+        if (Auth::user()->role !== 'admin') {
             return redirect()->route('tasks.index')->with('error', 'No tienes permiso para eliminar tareas.');
         }
         $task->delete();

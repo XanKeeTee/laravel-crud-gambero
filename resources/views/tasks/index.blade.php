@@ -54,8 +54,11 @@
                                 class="px-6 py-4 font-extrabold text-gray-900"> {{ __('DESCRIPCIÓN') }} </th>
                             <th style="position: sticky; top: 0; z-index: 10; background-color: #ffffff; text-align: center; border-bottom: 1px solid #e5e7eb;"
                                 class="px-6 py-4 font-extrabold text-gray-900"> {{ __('ESTADO') }} </th>
-                            <th style="position: sticky; top: 0; z-index: 10; background-color: #ffffff; text-align: center; border-bottom: 1px solid #e5e7eb;"
-                                class="px-6 py-4 font-extrabold text-gray-900"> {{ __('ACCIONES') }} </th>
+
+                            @if (auth()->user()->role === 'admin')
+                                <th style="position: sticky; top: 0; z-index: 10; background-color: #ffffff; text-align: center; border-bottom: 1px solid #e5e7eb;"
+                                    class="px-6 py-4 font-extrabold text-gray-900"> {{ __('ACCIONES') }} </th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white" id="tasksTableBody">
@@ -74,28 +77,32 @@
                                         </span>
                                     </div>
                                 </td>
-                                <td style="text-align: center;" class="px-6 py-4">
-                                    <div style="display: flex; justify-content: center; gap: 10px;">
-                                        <a href="{{ route('tasks.edit', $task->id) }}"
-                                            style="background-color: #4f46e5 !important; color: white !important; text-decoration: none;"
-                                            class="px-3 py-2 rounded-md font-bold text-xs uppercase tracking-widest shadow-sm">
-                                            {{ __('EDITAR') }}
-                                        </a>
-                                        <form action="{{ route('tasks.destroy', $task->id) }}" method="POST"
-                                            style="margin: 0;">
-                                            @csrf @method('DELETE')
-                                            <button type="submit" onclick="return confirm('¿Borrar tarea?')"
-                                                style="background-color: #dc2626 !important; color: white !important; border: none; cursor: pointer;"
+
+                                @if (auth()->user()->role === 'admin')
+                                    <td style="text-align: center;" class="px-6 py-4">
+                                        <div style="display: flex; justify-content: center; gap: 10px;">
+                                            <a href="{{ route('tasks.edit', $task->id) }}"
+                                                style="background-color: #4f46e5 !important; color: white !important; text-decoration: none;"
                                                 class="px-3 py-2 rounded-md font-bold text-xs uppercase tracking-widest shadow-sm">
-                                                {{ __('BORRAR') }}
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
+                                                {{ __('EDITAR') }}
+                                            </a>
+                                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST"
+                                                style="margin: 0;">
+                                                @csrf @method('DELETE')
+                                                <button type="submit" onclick="return confirm('¿Borrar tarea?')"
+                                                    style="background-color: #dc2626 !important; color: white !important; border: none; cursor: pointer;"
+                                                    class="px-3 py-2 rounded-md font-bold text-xs uppercase tracking-widest shadow-sm">
+                                                    {{ __('BORRAR') }}
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                @endif
                             </tr>
                         @empty
                             <tr id="noResultsRow">
-                                <td colspan="4" class="px-6 py-10 text-center text-gray-500 italic">
+                                <td colspan="{{ auth()->user()->role === 'admin' ? '4' : '3' }}"
+                                    class="px-6 py-10 text-center text-gray-500 italic">
                                     {{ __('No hay tareas registradas.') }}</td>
                             </tr>
                         @endforelse

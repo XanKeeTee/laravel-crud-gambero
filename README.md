@@ -1,99 +1,91 @@
-# Laravel API Auth - Sanctum implementation
+# 🦐 Laravel CRUD Gambero - Gestor de Tareas
 
-Este proyecto es una API RESTful desarrollada con **Laravel 11** (o tu versión actual) que implementa un sistema completo de autenticación segura utilizando **Laravel Sanctum**.
+![Laravel](https://img.shields.io/badge/Laravel-11.x-FF2D20?style=for-the-badge&logo=laravel)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css)
+![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=for-the-badge&logo=php)
 
-El objetivo principal es proporcionar endpoints seguros para el registro de usuarios, inicio de sesión y acceso a rutas protegidas mediante Tokens de Acceso (Bearer Tokens).
-
-## 🚀 Tecnologías
-
-* **Framework:** Laravel
-* **Autenticación:** Laravel Sanctum
-* **Base de Datos:** MySQL
-* **Herramienta de Testing:** Thunder Client (VS Code) / Postman
+Una aplicación web robusta para la gestión de tareas desarrollada con **Laravel 11**. Este proyecto implementa un sistema completo de autenticación con **roles diferenciados (Administrador y Usuario)**, permitiendo un control granular sobre quién puede crear, ver y eliminar tareas.
 
 ---
 
-## 🛠️ Instalación y Configuración
+## 📸 Vistazo al Proyecto
+
+### 1. Registro con Roles
+El sistema permite a los nuevos usuarios registrarse eligiendo su rol. Esto define sus permisos dentro de la aplicación desde el primer momento.
+
+> ![Registro de Usuarios](screenshots/register.png)
+> *(Captura del formulario de registro con el selector de "Tipo de Usuario" desplegado)*
+
+### 2. Panel de Control (Vista de Usuario)
+Los usuarios normales tienen una interfaz limpia donde solo pueden gestionar sus propias tareas. Se ha optimizado la experiencia de usuario ocultando botones de acciones masivas o administrativas.
+
+> ![Vista Usuario Normal](screenshots/user_dashboard.png)
+> *(Captura del Index de tareas logueado como Usuario Normal - SIN botones de borrar/editar)*
+
+### 3. Panel de Administración
+Los administradores tienen control total. Pueden visualizar todas las tareas de la plataforma y tienen acceso exclusivo a las acciones de edición y eliminación global.
+
+> ![Vista Administrador](screenshots/admin_dashboard.png)
+> *(Captura del Index de tareas logueado como Admin - CON la columna de acciones visible)*
+
+---
+
+## 🚀 Características Principales
+
+* **Autenticación Segura:** Sistema de login y registro protegido utilizando Laravel Breeze.
+* **Sistema de Roles (RBAC):**
+    * **Administrador:** Acceso global, capacidad de moderación (Borrar/Editar cualquier tarea).
+    * **Usuario Estándar:** Acceso privado, solo visualiza y crea sus propias tareas.
+* **Gestión de Tareas (CRUD):** Funcionalidad completa para Crear, Leer, Actualizar y Eliminar tareas.
+* **Interfaz Reactiva:** Diseño moderno, limpio y responsive utilizando **Tailwind CSS**.
+* **Validaciones:** Protección de datos tanto en frontend como en backend para asegurar la integridad de la información.
+
+---
+
+## 🛠️ Requisitos del Sistema
+
+Asegúrate de tener instalado lo siguiente en tu entorno local antes de comenzar:
+
+* [PHP](https://www.php.net/) >= 8.2
+* [Composer](https://getcomposer.org/)
+* [Node.js](https://nodejs.org/) & NPM
+* Base de datos (MySQL, SQLite, o MariaDB)
+
+---
+
+## 💻 Guía de Instalación
 
 Sigue estos pasos para desplegar el proyecto en tu máquina local:
 
-1.  **Clonar el repositorio**
-    ```bash
-    git clone https://github.com/XanKeeTee/laravel-api-gambero
-    cd laravel-api-restfull
-    ```
+### 1. Clonar el Repositorio
+```bash
+git clone [https://github.com/tu-usuario/laravel-crud-gambero.git](https://github.com/tu-usuario/laravel-crud-gambero.git)
+cd laravel-crud-gambero
+```
 
-2.  **Instalar dependencias de PHP**
-    ```bash
-    composer install
-    ```
+### 2. Instalar Dependencias de Backend
+```bash
+composer install                            
+```
+### 3. Instalar Dependencias de Frontend
+```bash
+npm install                           
+```
+### 4. Configurar el Entorno
+Duplica el archivo de ejemplo para crear tu configuración local:
 
-3.  **Configurar el entorno**
-    Duplica el archivo de ejemplo y genera la clave de la aplicación:
-    ```bash
-    cp .env.example .env
-    php artisan key:generate
-    ```
-    *Asegúrate de configurar tus credenciales de base de datos (DB_DATABASE, DB_USERNAME, etc.) dentro del archivo `.env`.*
-    !![.env](screenshots/env.png)
+cp .env.example .env
 
-5.  **Ejecutar migraciones**
-    Crea las tablas en la base de datos:
-    ```bash
-    php artisan migrate
-    ```
+Abre el archivo .env y configura las credenciales de tu base de datos:
 
-6.  **Iniciar el servidor local**
-    ```bash
-    php artisan serve
-    ```
-    La API estará disponible en: `http://127.0.0.1:8000`
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nombre_de_tu_bd
+DB_USERNAME=tu_usuario
+DB_PASSWORD=tu_contraseña
 
----
-
-## 📡 Endpoints y Pruebas
-
-A continuación se detalla el flujo de autenticación probado.
-
-### 1. Registro de Usuario (`POST`)
-**Endpoint:** `/api/register`
-
-Se envían los datos del usuario (nombre, email, contraseña y confirmación). La API valida los datos, crea el usuario y devuelve un token inicial.
-
-* **Request (Body JSON):**
-    ![Register Request](screenshots/register-request.png)
-
-* **Response (201 Created):**
-    ![Register Response](screenshots/register-response.png)
-
----
-
-### 2. Inicio de Sesión (`POST`)
-**Endpoint:** `/api/login`
-
-El usuario envía sus credenciales. Si son correctas, el sistema devuelve un **token de texto plano** que debe ser usado para futuras peticiones.
-
-* **Request (Body JSON):**
-    ![Login Request](screenshots/login-request.png)
-
-* **Response (200 OK - Con Token):**
-    ![Login Response](screenshots/login-response.png)
-
----
-
-### 3. Ruta Protegida - Perfil de Usuario (`GET`)
-**Endpoint:** `/api/user`
-
-Esta ruta está protegida por el middleware `auth:sanctum`. Para acceder, es obligatorio enviar el token obtenido en el login dentro de las cabeceras (Headers).
-
-* **Configuración del Header:**
-    * `Accept`: `application/json`
-    * `Authorization`: `Bearer <TU_TOKEN>`
-
-    ![Headers Configuration](screenshots/profile-headers.png)
-
-* **Response (Datos del Usuario):**
-    Si el token es válido, la API permite el acceso a la información.
-    ![User Profile Response](screenshots/profile-response.png)
-
----
+### 5. Generar Clave de Aplicación
+```bash
+php artisan key:generate                           
+```
