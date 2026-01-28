@@ -78,12 +78,12 @@ cp .env.example .env
 
 Abre el archivo .env y configura las credenciales de tu base de datos:
 
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=nombre_de_tu_bd
-DB_USERNAME=tu_usuario
-DB_PASSWORD=tu_contraseña
+DB_CONNECTION=mysql<br>
+DB_HOST=127.0.0.1<br>
+DB_PORT=3306<br>
+DB_DATABASE=login-crud-gambero<br>
+DB_USERNAME=tu_usuario<br>
+DB_PASSWORD=tu_contraseña<br>
 
 ### 5. Generar Clave de Aplicación
 ```bash
